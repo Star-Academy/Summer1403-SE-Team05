@@ -16,7 +16,25 @@ namespace Phase01_StudentAverage
         {
             _studentList = JsonConvert.DeserializeObject<List<Student>>(File.ReadAllText(studentsJsonPath));
             _courseList = JsonConvert.DeserializeObject<List<Course>>(File.ReadAllText(coursesJsonPath));
+
+
         }
+
+        public CalcSum()
+        {
+            top3Student = from s in _studentList
+                          join c in _courseList on s.StudentNumber equals c.StudentNumber
+                          group s by s.StudentNumber into g
+                          select new
+                          {
+                              FirstName = g.First().FirstName,
+                              LastName = g.First().LastName,
+                              Total = g.Avg(x => x.Score)
+                          }
+                        orderby Total descending
+                        take 3;
+        }
+
         public void printAll()
         {
             foreach (var student in _studentList)

@@ -288,3 +288,13 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+
+
+
+# Include .json files in bin/Debug/net8.0
+!bin/
+bin/*/
+!bin/*/Debug/
+bin/*/Debug/*/
+!bin/*/Debug/*/net8.0/
+bin/*/Debug/*/net8.0/*.json
