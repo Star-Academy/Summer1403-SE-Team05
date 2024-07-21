@@ -18,7 +18,7 @@ internal class TopStudentsCalculator
             _courseList.AddRange(deserializedCourseList);
     }
 
-    private IEnumerable<StudentAverageScore> GetTopNStudents(int n)
+    private IEnumerable<StudentAverageScore> GetTopNStudentAverageScore(int n)
     {
         return (from student in _studentList
                 join course in _courseList on student.StudentNumber equals course.StudentNumber
@@ -33,9 +33,9 @@ internal class TopStudentsCalculator
                 }).Take(n);
     }
 
-    public void PrintTopNStudents(int n)
+    public void PrintTopNStudentAverageScore(int n)
     {
-        var topNStudents = GetTopNStudents(n);
+        var topNStudents = GetTopNStudentAverageScore(n);
         foreach (var student in topNStudents)
         {
             Console.WriteLine($"Name: {student.FirstName} {student.LastName}, Average Score: {student.AverageScore}");

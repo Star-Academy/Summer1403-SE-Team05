@@ -12,7 +12,7 @@ internal class Program
             string coursesFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Resources.CoursesFilePath);
 
             var topStudentsCalculator = new TopStudentsCalculator(studentsFilePath, coursesFilePath);
-            topStudentsCalculator.PrintTopNStudents(3);
+            topStudentsCalculator.PrintTopNStudentAverageScore(3);
         }
         catch (Exception e)
         {
