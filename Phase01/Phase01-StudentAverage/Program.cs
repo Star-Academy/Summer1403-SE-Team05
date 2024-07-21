@@ -5,7 +5,7 @@
         static void Main(string[] args)
         {
             TopStudentsCalculator topStudentsCalculator = new TopStudentsCalculator("Students.json", "Courses.json");
-            topStudentsCalculator.printAll();
+            topStudentsCalculator.PrintTop3Students();
         }
     }
 }
