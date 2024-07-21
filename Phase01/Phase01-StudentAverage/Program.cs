@@ -11,7 +11,7 @@ internal class Program
             string studentsFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Resources.StudentsFilePath);
             string coursesFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Resources.CoursesFilePath);
 
-            var topStudentsCalculator = new TopStudentsCalculator(studentsFilePath, coursesFilePath);
+            var topStudentsCalculator = new TopStudentAverageScoreCalculator(studentsFilePath, coursesFilePath);
             topStudentsCalculator.PrintTopNStudentAverageScore(3);
         }
         catch (Exception e)

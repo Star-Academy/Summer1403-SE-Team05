@@ -2,11 +2,11 @@
 
 namespace Phase01_StudentAverage;
 
-internal class TopStudentsCalculator
+internal class TopStudentAverageScoreCalculator
 {
     private List<Student> _studentList = new List<Student>();
     private List<Course> _courseList = new List<Course>();
-    public TopStudentsCalculator(string studentsJsonPath, string coursesJsonPath)
+    public TopStudentAverageScoreCalculator(string studentsJsonPath, string coursesJsonPath)
     {
         var deserializedStudentList = JsonConvert.DeserializeObject<List<Student>>(File.ReadAllText(studentsJsonPath));
         var deserializedCourseList = JsonConvert.DeserializeObject<List<Course>>(File.ReadAllText(coursesJsonPath));
