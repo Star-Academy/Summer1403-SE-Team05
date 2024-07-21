@@ -4,7 +4,8 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            TopStudentsCalculator topStudentsCalculator = new TopStudentsCalculator("Students.json", "Courses.json");
+            topStudentsCalculator.printAll();
         }
     }
 }
