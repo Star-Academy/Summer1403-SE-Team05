@@ -4,7 +4,10 @@
     {
         static void Main(string[] args)
         {
-            TopStudentsCalculator topStudentsCalculator = new TopStudentsCalculator("Students.json", "Courses.json");
+            string studentsFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Students.json");
+            string coursesFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Courses.json");
+
+            TopStudentsCalculator topStudentsCalculator = new TopStudentsCalculator(studentsFilePath, coursesFilePath);
             topStudentsCalculator.PrintTop3Students();
         }
     }
