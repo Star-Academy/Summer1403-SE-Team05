@@ -8,7 +8,7 @@
             string coursesFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Courses.json");
 
             TopStudentsCalculator topStudentsCalculator = new TopStudentsCalculator(studentsFilePath, coursesFilePath);
-            topStudentsCalculator.PrintTop3Students();
+            topStudentsCalculator.PrintTopNStudents(3);
         }
     }
 }

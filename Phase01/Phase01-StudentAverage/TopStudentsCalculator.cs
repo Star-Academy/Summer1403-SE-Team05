@@ -20,7 +20,7 @@ namespace Phase01_StudentAverage
 
         }
 
-        private IEnumerable<dynamic> GetTop3Students()
+        private IEnumerable<dynamic> GetTopNStudents(int n)
         {
             return (from student in _studentList
                     join course in _courseList on student.StudentNumber equals course.StudentNumber
@@ -32,13 +32,13 @@ namespace Phase01_StudentAverage
                         FirstName = studentGroup.First().FirstName,
                         LastName = studentGroup.First().LastName,
                         AverageScore = avgScore
-                    }).Take(3);
+                    }).Take(n);
         }
 
-        public void PrintTop3Students()
+        public void PrintTopNStudents(int n)
         {
-            var top3Students = GetTop3Students();
-            foreach (var student in top3Students)
+            var topNStudents = GetTopNStudents(n);
+            foreach (var student in topNStudents)
             {
                 Console.WriteLine($"Name: {student.FirstName} {student.LastName}, Average Score: {student.AverageScore}");
             }
