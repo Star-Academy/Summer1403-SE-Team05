@@ -2,6 +2,13 @@
 
 namespace Phase01_StudentAverage;
 
+public class StudentAverageScore
+{
+    public string FirstName { get; set; } = String.Empty;
+    public string LastName { get; set; } = String.Empty;
+    public double AverageScore { get; set; } = 0.0;
+}
+
 internal class TopStudentsCalculator
 {
     private List<Student> _studentList = new List<Student>();
@@ -18,14 +25,14 @@ internal class TopStudentsCalculator
             _courseList.AddRange(deserializedCourseList);
     }
 
-    private IEnumerable<dynamic> GetTopNStudents(int n)
+    private IEnumerable<StudentAverageScore> GetTopNStudents(int n)
     {
         return (from student in _studentList
                 join course in _courseList on student.StudentNumber equals course.StudentNumber
                 group new { student.FirstName, student.LastName, course.Score } by student.StudentNumber into studentGroup
                 let avgScore = studentGroup.Average(x => x.Score)
                 orderby avgScore descending
-                select new
+                select new StudentAverageScore
                 {
                     FirstName = studentGroup.First().FirstName,
                     LastName = studentGroup.First().LastName,
