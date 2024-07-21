@@ -2,13 +2,6 @@
 
 namespace Phase01_StudentAverage;
 
-public class StudentAverageScore
-{
-    public string FirstName { get; set; } = String.Empty;
-    public string LastName { get; set; } = String.Empty;
-    public double AverageScore { get; set; } = 0.0;
-}
-
 internal class TopStudentsCalculator
 {
     private List<Student> _studentList = new List<Student>();
