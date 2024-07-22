@@ -12,7 +12,7 @@ internal class UserInterface
     {
         Console.WriteLine("Enter the word you want to search for:");
         var targetWord = Console.ReadLine();
-        var resultFileNames = _invertedIndex.FindFilesContainingTagetWord(targetWord);
+        var resultFileNames = _invertedIndex.FindDocumentsContainingTagetWord(targetWord);
         Console.WriteLine("\nSearch Results:");
         Console.WriteLine("---------------");
 

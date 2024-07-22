@@ -10,18 +10,18 @@ internal class InvertedIndex
     {
         _fileReader = fileReader;
     }
-    private string[] TokenizeFile(string text)
+    private string[] TokenizeDocument(string document)
     {
-        return text.Split(
+        return document.Split(
             new char[] { ' ', '\t', '\r', '\n', ',', '.', ';', ':', '!', '?', '-', '(', ')', '[', ']', '{', '}', '\"', '\'' },
             StringSplitOptions.RemoveEmptyEntries
             );
     }
-    private void AddFileToInvertedIndex(string completeFilePath, string fileContent)
+    private void AddDocumentToInvertedIndex(string completeDocumentPath, string documentContent)
     {
-        string fileName = Path.GetFileName(completeFilePath);
-        string [] tokens = TokenizeFile(fileContent);
-        foreach (string token in tokens)
+        string fileName = Path.GetFileName(completeDocumentPath);
+        string [] documentTokens = TokenizeDocument(documentContent);
+        foreach (string token in documentTokens)
         {
             if (!_invertedIndex.ContainsKey(token))
                 _invertedIndex[token] = new HashSet<string>();
@@ -29,20 +29,20 @@ internal class InvertedIndex
             _invertedIndex[token].Add(fileName);
         }
     }
-    public void FillInvertedIndex(string documentsPath)
+    public void FillInvertedIndex(string documentFilesPath)
     {
-        var files = _fileReader.ReadAllFiles(documentsPath);
-        var captializedFiles = _fileReader.CapitalizeFilesContent(files);
-        foreach (var file in captializedFiles)
+        var documents = _fileReader.ReadAllFiles(documentFilesPath);
+        var captializedDocuments = _fileReader.CapitalizeDocumentsContent(documents);
+        foreach (var document in captializedDocuments)
         {
-            AddFileToInvertedIndex(file.Key, file.Value);
+            AddDocumentToInvertedIndex(document.Key, document.Value);
         }
     }
-    public IEnumerable<string> FindFilesContainingTagetWord(string targetWord)
+    public IEnumerable<string> FindDocumentsContainingTagetWord(string targetWord)
     {
         var upperTargetWord = targetWord.ToUpper();
-        if(_invertedIndex.TryGetValue(upperTargetWord, out var resultFileNames))
-            return resultFileNames;
+        if(_invertedIndex.TryGetValue(upperTargetWord, out var resultDocumentNames))
+            return resultDocumentNames;
         else 
             return Enumerable.Empty<string>();
     }

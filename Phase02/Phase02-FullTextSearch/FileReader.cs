@@ -22,7 +22,7 @@ internal class FileReader
 
         return filesContent;
     }
-    public Dictionary<string, string> CapitalizeFilesContent(Dictionary<string, string> filesToCapitalize)
+    public Dictionary<string, string> CapitalizeDocumentsContent(Dictionary<string, string> filesToCapitalize)
     {
         return filesToCapitalize.ToDictionary(
             file => file.Key,
