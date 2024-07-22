@@ -8,5 +8,10 @@ internal class Program
         var completeFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Resources.DocumentsPath);
         InvertedIndex invertedIndex = new(fileReader);
         invertedIndex.FillInvertedIndex(completeFilePath);
+        var result = invertedIndex.FindFilesContainingTagetWord("MISDIAGNOSED");
+        foreach (var file in result)
+        {
+            Console.WriteLine(file);
+        }
     }
 }

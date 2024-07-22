@@ -38,4 +38,12 @@ internal class InvertedIndex
             AddFileToInvertedIndex(file.Key, file.Value);
         }
     }
+    public IEnumerable<string> FindFilesContainingTagetWord(string targetWord)
+    {
+        var upperTargetWord = targetWord.ToUpper();
+        if(_invertedIndex.TryGetValue(upperTargetWord, out var resultFileNames))
+            return resultFileNames;
+        else 
+            return Enumerable.Empty<string>();
+    }
 }
