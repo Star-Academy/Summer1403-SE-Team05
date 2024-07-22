@@ -2,8 +2,12 @@
 
 internal class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        Console.WriteLine("Hello, World!");
+        FileReader fileReader = new();
+        var completeFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Resources.DocumentsPath);
+        var files = fileReader.ReadAllFiles(completeFilePath);
+        var captializedFiles = fileReader.CapitalizeFilesContent(files);
+        fileReader.PrintAll(captializedFiles);
     }
 }
