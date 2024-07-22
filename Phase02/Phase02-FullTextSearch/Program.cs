@@ -1,4 +1,7 @@
-﻿namespace Phase02_FullTextSearch;
+﻿using Phase02_FullTextSearch.Services;
+using Phase02_FullTextSearch.UI;
+
+namespace Phase02_FullTextSearch;
 
 internal class Program
 {

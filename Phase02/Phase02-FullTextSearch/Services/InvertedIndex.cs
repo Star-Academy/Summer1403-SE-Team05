@@ -1,6 +1,6 @@
 ﻿using System.IO.Enumeration;
 
-namespace Phase02_FullTextSearch;
+namespace Phase02_FullTextSearch.Services;
 
 internal class InvertedIndex
 {
@@ -20,7 +20,7 @@ internal class InvertedIndex
     private void AddDocumentToInvertedIndex(string completeDocumentPath, string documentContent)
     {
         string fileName = Path.GetFileName(completeDocumentPath);
-        string [] documentTokens = TokenizeDocument(documentContent);
+        string[] documentTokens = TokenizeDocument(documentContent);
         foreach (string token in documentTokens)
         {
             if (!_invertedIndex.ContainsKey(token))
@@ -41,9 +41,9 @@ internal class InvertedIndex
     public IEnumerable<string> FindDocumentsContainingTagetWord(string targetWord)
     {
         var upperTargetWord = targetWord.ToUpper();
-        if(_invertedIndex.TryGetValue(upperTargetWord, out var resultDocumentNames))
+        if (_invertedIndex.TryGetValue(upperTargetWord, out var resultDocumentNames))
             return resultDocumentNames;
-        else 
+        else
             return Enumerable.Empty<string>();
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Phase02_FullTextSearch;
+﻿using Phase02_FullTextSearch.Services;
+
+namespace Phase02_FullTextSearch.UI;
 
 internal class UserInterface
 {

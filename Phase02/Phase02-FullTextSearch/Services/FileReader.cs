@@ -1,4 +1,4 @@
-﻿namespace Phase02_FullTextSearch;
+﻿namespace Phase02_FullTextSearch.Services;
 
 internal class FileReader
 {
