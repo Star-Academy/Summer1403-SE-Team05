@@ -6,8 +6,7 @@ internal class Program
     {
         FileReader fileReader = new();
         var completeFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Resources.DocumentsPath);
-        var files = fileReader.ReadAllFiles(completeFilePath);
-        var captializedFiles = fileReader.CapitalizeFilesContent(files);
-        fileReader.PrintAll(captializedFiles);
+        InvertedIndex invertedIndex = new(fileReader);
+        invertedIndex.FillInvertedIndex(completeFilePath);
     }
 }
