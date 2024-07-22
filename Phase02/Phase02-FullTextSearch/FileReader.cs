@@ -29,14 +29,4 @@ internal class FileReader
             file => file.Value.ToUpper()
             );
     }
-    public void PrintAll(Dictionary<string, string> filesToPrint)
-    {
-        foreach (var file in filesToPrint)
-        {
-            Console.WriteLine($"File: {Path.GetFileName(file.Key)}");
-            Console.WriteLine("Content:");
-            Console.WriteLine(file.Value);
-            Console.WriteLine();
-        }
-    }
 }
