@@ -1,4 +1,6 @@
-﻿namespace Phase02_FullTextSearch;
+﻿using System.IO.Enumeration;
+
+namespace Phase02_FullTextSearch;
 
 internal class InvertedIndex
 {
@@ -15,8 +17,9 @@ internal class InvertedIndex
             StringSplitOptions.RemoveEmptyEntries
             );
     }
-    private void AddFileToInvertedIndex(string fileName, string fileContent)
+    private void AddFileToInvertedIndex(string completeFilePath, string fileContent)
     {
+        string fileName = Path.GetFileName(completeFilePath);
         string [] tokens = TokenizeFile(fileContent);
         foreach (string token in tokens)
         {
