@@ -289,4 +289,6 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 
-Assets/
+Phase02-FullTextSearch/Assets/Documents/*
+!Phase02-FullTextSearch/Assets/Documents/57110
+!Phase02-FullTextSearch/Assets/Documents/58043
