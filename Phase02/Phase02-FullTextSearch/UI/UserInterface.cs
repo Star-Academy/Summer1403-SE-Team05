@@ -29,12 +29,15 @@ internal class UserInterface
 
         return (andWords, orWords, notWords);
     }
-    private void AskCriteriaFromUser()
+    private bool AskCriteriaFromUser()
     {
-        Console.WriteLine("Enter criteria: (No prefix for AND words, + prefix for OR words, - prefix for NOT words");
+        Console.WriteLine("Enter criteria: (No prefix for AND words, + prefix for OR words, - prefix for NOT words, exit! for exit");
         var command = Console.ReadLine();
+        if (command.Equals("exit!"))
+            return false;
+
         (List<string> andWords, List<string> orWords, List<string> notWords) = ParseCommand(command);
-        var resultFileNames = _invertedIndex.FindDocumentsByCriteria(andWords, orWords, notWords);
+        var resultFileNames = _invertedIndex.FindDocumentsByCriteria(andWords, orWords, notWords).ToList();
         Console.WriteLine("\nSearch Results:");
         Console.WriteLine("---------------");
 
@@ -47,11 +50,11 @@ internal class UserInterface
             Console.WriteLine("No files found containing the criteria.");
 
         Console.WriteLine("---------------\n");
+        return true;
     }
 
-    public void StartInteractingWithUser()
+    public void RunAskCriteriaFromUserLoop()
     {
-        while (true)
-            AskCriteriaFromUser();
+        while (AskCriteriaFromUser()) ;
     }
 }

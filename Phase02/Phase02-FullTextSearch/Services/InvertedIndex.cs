@@ -1,4 +1,5 @@
-﻿namespace Phase02_FullTextSearch.Services;
+﻿using Phase02_FullTextSearch.Utilities;
+namespace Phase02_FullTextSearch.Services;
 
 internal class InvertedIndex
 {
@@ -12,7 +13,7 @@ internal class InvertedIndex
     private string[] TokenizeDocument(string document)
     {
         return document.Split(
-            new char[] { ' ', '\t', '\r', '\n', ',', '.', ';', ':', '!', '?', '-', '(', ')', '[', ']', '{', '}', '\"', '\'' },
+            Delimiters.Characters,
             StringSplitOptions.RemoveEmptyEntries
             );
     }
@@ -32,13 +33,13 @@ internal class InvertedIndex
     public void FillInvertedIndex(string documentFilesPath)
     {
         var documents = _fileReader.ReadAllFiles(documentFilesPath);
-        var captializedDocuments = _fileReader.CapitalizeDocumentsContent(documents);
-        foreach (var document in captializedDocuments)
+        var capitalizedDocuments = _fileReader.CapitalizeDocumentsContent(documents);
+        foreach (var document in capitalizedDocuments)
         {
             AddDocumentToInvertedIndex(document.Key, document.Value);
         }
     }
-    private IEnumerable<string> FindDocumentsContainingTagetWord(string targetWord)
+    private IEnumerable<string> FindDocumentsContainingTargetWord(string targetWord)
     {
         var upperTargetWord = targetWord.ToUpper();
         if (_invertedIndex.TryGetValue(upperTargetWord, out var resultDocumentNames))
@@ -53,7 +54,7 @@ internal class InvertedIndex
         var allDocuments = _allDocumentsName.AsEnumerable();
         return words.Aggregate(
             allDocuments,
-            (current, word) => current.Intersect(FindDocumentsContainingTagetWord(word))
+            (current, word) => current.Intersect(FindDocumentsContainingTargetWord(word))
             );
     }
     private IEnumerable<string> FindNoWordsDocuments(List<string> words)
@@ -63,7 +64,7 @@ internal class InvertedIndex
         var allDocuments = _allDocumentsName.AsEnumerable();
         return words.Aggregate(
             allDocuments,
-            (current, word) => current.Intersect(allDocuments.Except(FindDocumentsContainingTagetWord(word)))
+            (current, word) => current.Intersect(allDocuments.Except(FindDocumentsContainingTargetWord(word)))
             );
     }
     private IEnumerable<string> FindAtLeast1WordsDocument(List<string> words)
