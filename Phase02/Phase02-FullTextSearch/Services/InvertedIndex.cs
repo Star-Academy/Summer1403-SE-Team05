@@ -46,4 +46,31 @@ internal class InvertedIndex
         else
             return Enumerable.Empty<string>();
     }
+    private IEnumerable<string> FindMustWordsDocuments(List<string> words)
+    {
+        var allDocuments = _invertedIndex.Keys.AsEnumerable();
+        return words.Aggregate(
+            allDocuments,
+            (current, word) => current.Intersect(FindDocumentsContainingTagetWord(word))
+            );
+    }
+    private IEnumerable<string> FindNoWordsDocuments(List<string> words)
+    {
+        var allDocuments = _invertedIndex.Keys.AsEnumerable();
+        return words.Aggregate(
+            allDocuments,
+            (current, word) => current.Intersect(allDocuments.Except(FindDocumentsContainingTagetWord(word)))
+            );
+    }
+    private IEnumerable<string> FindAtLeast1WordsDocument(List<string> words)
+    {
+        var allDocuments = _invertedIndex.Keys;
+        return allDocuments.Except(FindNoWordsDocuments(words));
+    }
+    public IEnumerable<string> FindAll(List<string> mustWords, List<string> atLeast1Word, List<string> noWords)
+    {
+        return FindMustWordsDocuments(mustWords)
+            .Intersect(FindAtLeast1WordsDocument(atLeast1Word))
+            .Intersect(FindNoWordsDocuments(noWords));
+    }
 }
