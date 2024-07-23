@@ -9,12 +9,32 @@ internal class UserInterface
     {
         _invertedIndex = invertedIndex;
     }
-
-    private void AskForTargetWordAndShowResult()
+    private (List<string>, List<string>, List<string>) ParseCommand(string command)
     {
-        Console.WriteLine("Enter the word you want to search for:");
-        var targetWord = Console.ReadLine();
-        var resultFileNames = _invertedIndex.FindDocumentsContainingTagetWord(targetWord);
+        List<string> andWords = new List<string>();
+        List<string> orWords = new List<string>();
+        List<string> notWords = new List<string>();
+
+        var words = command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (var word in words)
+        {
+            if (word.StartsWith('+'))
+                orWords.Add(word);
+            else if (word.StartsWith('-'))
+                notWords.Add(word);
+            else
+                andWords.Add(word);
+        }
+
+        return (andWords, orWords, notWords);
+    }
+    private void AskCriteriaFromUser()
+    {
+        Console.WriteLine("Enter criteria: (No prefix for AND words, + prefix for OR words, - prefix for NOT words");
+        var command = Console.ReadLine();
+        (List<string> andWords, List<string> orWords, List<string> notWords) = ParseCommand(command);
+        var resultFileNames = _invertedIndex.FindDocumentsByCriteria(andWords, orWords, notWords);
         Console.WriteLine("\nSearch Results:");
         Console.WriteLine("---------------");
 
@@ -32,6 +52,6 @@ internal class UserInterface
     public void StartInteractingWithUser()
     {
         while (true)
-            AskForTargetWordAndShowResult();
+            AskCriteriaFromUser();
     }
 }
