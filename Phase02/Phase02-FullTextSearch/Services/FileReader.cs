@@ -8,12 +8,7 @@ internal class FileReader
         try
         {
             var files = Directory.GetFiles(filesPath);
-
-            foreach (var file in files)
-            {
-                var content = File.ReadAllText(file);
-                filesContent.Add(file, content);
-            }
+            filesContent = files.ToDictionary(file => file, file => File.ReadAllText(file));
         }
         catch (Exception ex)
         {

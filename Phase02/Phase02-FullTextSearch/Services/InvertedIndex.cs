@@ -21,14 +21,14 @@ internal class InvertedIndex
     {
         string fileName = Path.GetFileName(completeDocumentPath);
         string[] documentTokens = TokenizeDocument(documentContent);
-        foreach (string token in documentTokens)
+        documentTokens.ToList().ForEach(token =>
         {
             if (!_invertedIndex.ContainsKey(token))
                 _invertedIndex[token] = new HashSet<string>();
 
             _invertedIndex[token].Add(fileName);
             _allDocumentsName.Add(fileName);
-        }
+        });
     }
     public void FillInvertedIndex(string documentFilesPath)
     {
