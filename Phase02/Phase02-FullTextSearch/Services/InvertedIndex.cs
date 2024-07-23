@@ -38,7 +38,7 @@ internal class InvertedIndex
             AddDocumentToInvertedIndex(document.Key, document.Value);
         }
     }
-    public IEnumerable<string> FindDocumentsContainingTagetWord(string targetWord)
+    private IEnumerable<string> FindDocumentsContainingTagetWord(string targetWord)
     {
         var upperTargetWord = targetWord.ToUpper();
         if (_invertedIndex.TryGetValue(upperTargetWord, out var resultDocumentNames))
