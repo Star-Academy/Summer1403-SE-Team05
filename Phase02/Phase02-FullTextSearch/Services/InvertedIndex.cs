@@ -67,7 +67,7 @@ internal class InvertedIndex
         var allDocuments = _invertedIndex.Keys;
         return allDocuments.Except(FindNoWordsDocuments(words));
     }
-    public IEnumerable<string> FindAll(List<string> mustWords, List<string> atLeast1Word, List<string> noWords)
+    public IEnumerable<string> FindDocumentsByCriteria(List<string> mustWords, List<string> atLeast1Word, List<string> noWords)
     {
         return FindMustWordsDocuments(mustWords)
             .Intersect(FindAtLeast1WordsDocument(atLeast1Word))
