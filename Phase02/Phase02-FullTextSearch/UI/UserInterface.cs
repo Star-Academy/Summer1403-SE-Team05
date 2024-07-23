@@ -44,7 +44,7 @@ internal class UserInterface
                 Console.WriteLine($"- {fileName}");
         }
         else
-            Console.WriteLine("No files found containing the word.");
+            Console.WriteLine("No files found containing the criteria.");
 
         Console.WriteLine("---------------\n");
     }
