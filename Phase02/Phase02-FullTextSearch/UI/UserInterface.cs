@@ -20,9 +20,9 @@ internal class UserInterface
         foreach (var word in words)
         {
             if (word.StartsWith('+'))
-                orWords.Add(word);
+                orWords.Add(word.Substring(1));
             else if (word.StartsWith('-'))
-                notWords.Add(word);
+                notWords.Add(word.Substring(1));
             else
                 andWords.Add(word);
         }

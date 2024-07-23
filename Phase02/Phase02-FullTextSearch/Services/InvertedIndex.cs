@@ -1,11 +1,10 @@
-﻿using System.IO.Enumeration;
-
-namespace Phase02_FullTextSearch.Services;
+﻿namespace Phase02_FullTextSearch.Services;
 
 internal class InvertedIndex
 {
     private readonly FileReader _fileReader;
     private Dictionary<string, HashSet<string>> _invertedIndex = new();
+    private HashSet<string> _allDocumentsName = new HashSet<string>();
     public InvertedIndex(FileReader fileReader)
     {
         _fileReader = fileReader;
@@ -27,6 +26,7 @@ internal class InvertedIndex
                 _invertedIndex[token] = new HashSet<string>();
 
             _invertedIndex[token].Add(fileName);
+            _allDocumentsName.Add(fileName);
         }
     }
     public void FillInvertedIndex(string documentFilesPath)
@@ -48,7 +48,9 @@ internal class InvertedIndex
     }
     private IEnumerable<string> FindMustWordsDocuments(List<string> words)
     {
-        var allDocuments = _invertedIndex.Keys.AsEnumerable();
+        if (words.Count == 0)
+            return _invertedIndex.Values.SelectMany(v => v);
+        var allDocuments = _allDocumentsName.AsEnumerable();
         return words.Aggregate(
             allDocuments,
             (current, word) => current.Intersect(FindDocumentsContainingTagetWord(word))
@@ -56,7 +58,9 @@ internal class InvertedIndex
     }
     private IEnumerable<string> FindNoWordsDocuments(List<string> words)
     {
-        var allDocuments = _invertedIndex.Keys.AsEnumerable();
+        if (words.Count == 0)
+            return _invertedIndex.Values.SelectMany(v => v);
+        var allDocuments = _allDocumentsName.AsEnumerable();
         return words.Aggregate(
             allDocuments,
             (current, word) => current.Intersect(allDocuments.Except(FindDocumentsContainingTagetWord(word)))
@@ -64,7 +68,9 @@ internal class InvertedIndex
     }
     private IEnumerable<string> FindAtLeast1WordsDocument(List<string> words)
     {
-        var allDocuments = _invertedIndex.Keys;
+        if(words.Count == 0)
+            return _invertedIndex.Values.SelectMany(v => v);
+        var allDocuments = _allDocumentsName.AsEnumerable();
         return allDocuments.Except(FindNoWordsDocuments(words));
     }
     public IEnumerable<string> FindDocumentsByCriteria(List<string> mustWords, List<string> atLeast1Word, List<string> noWords)
