@@ -1,4 +1,5 @@
-﻿using Phase02_FullTextSearch.Utilities;
+using Phase02_FullTextSearch.Utilities;
+
 namespace Phase02_FullTextSearch.Services;
 
 internal class InvertedIndex
@@ -21,6 +22,7 @@ internal class InvertedIndex
     {
         var fileName = Path.GetFileName(completeDocumentPath);
         var documentTokens = TokenizeDocument(documentContent);
+
         documentTokens.ToList().ForEach(token =>
         {
             if (!_invertedIndex.ContainsKey(token))

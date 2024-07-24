@@ -38,6 +38,7 @@ internal class UserInterface
 
         (List<string> andWords, List<string> orWords, List<string> notWords) = ParseCommand(command);
         var resultFileNames = _invertedIndex.FindDocumentsByCriteria(andWords, orWords, notWords).ToList();
+
         Console.WriteLine("\nSearch Results:");
         Console.WriteLine("---------------");
 
