@@ -9,15 +9,37 @@ internal class UserInterface
     {
         _invertedIndex = invertedIndex;
     }
-
-    private bool AskForTargetWordAndShowResult()
+    private UserCriteria ParseCommand(string command)
     {
-        Console.WriteLine("Enter the word you want to search for: (or exit! for exit)");
-        var targetWord = Console.ReadLine();
-        if (targetWord.Equals("exit!"))
+        UserCriteria userCriteria = new();
+        var words = command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        
+        foreach (var word in words)
+        {
+            if (word.StartsWith('+'))
+                userCriteria.AtLeastOneOfTheseWords.Add(word.Substring(1));
+            else if (word.StartsWith('-'))
+                userCriteria.ExcludedWords.Add(word.Substring(1));
+            else
+                userCriteria.ExcludedWords.Add(word);
+        }
+
+        return userCriteria;
+    }
+    private bool AskCriteriaFromUser()
+    {
+        Console.WriteLine("Enter criteria: (No prefix for AND words, + prefix for OR words, - prefix for NOT words, exit! for exit");
+        var command = Console.ReadLine();
+        if (command.Equals("exit!"))
             return false;
 
-        var resultFileNames = _invertedIndex.FindDocumentsContainingTargetWord(targetWord).ToList();
+        var userCriteria = ParseCommand(command);
+        var resultFileNames = _invertedIndex.FindDocumentsByCriteria(
+            userCriteria.RequiredWords,
+            userCriteria.AtLeastOneOfTheseWords,
+            userCriteria.ExcludedWords).
+            ToList();
+
         Console.WriteLine("\nSearch Results:");
         Console.WriteLine("---------------");
 
@@ -27,7 +49,7 @@ internal class UserInterface
                 Console.WriteLine($"- {fileName}");
         }
         else
-            Console.WriteLine("No files found containing the word.");
+            Console.WriteLine("No files found containing the criteria.");
 
         Console.WriteLine("---------------\n");
         return true;
@@ -35,6 +57,6 @@ internal class UserInterface
 
     public void RunAskCriteriaFromUserLoop()
     {
-        while (AskForTargetWordAndShowResult()) ;
+        while (AskCriteriaFromUser()) ;
     }
 }
