@@ -49,7 +49,7 @@ internal class InvertedIndex
         else
             return Enumerable.Empty<string>();
     }
-    private IEnumerable<string> FindMustWordsDocuments(List<string> words)
+    private IEnumerable<string> FindRequiredWordsDocuments(List<string> words)
     {
         if (words.Count == 0)
             return _invertedIndex.Values.SelectMany(v => v);
@@ -59,7 +59,7 @@ internal class InvertedIndex
             (current, word) => current.Intersect(FindDocumentsContainingTargetWord(word))
             );
     }
-    private IEnumerable<string> FindNoWordsDocuments(List<string> words)
+    private IEnumerable<string> FindExcludedWordsDocuments(List<string> words)
     {
         if (words.Count == 0)
             return _invertedIndex.Values.SelectMany(v => v);
@@ -69,17 +69,17 @@ internal class InvertedIndex
             (current, word) => current.Intersect(allDocuments.Except(FindDocumentsContainingTargetWord(word)))
             );
     }
-    private IEnumerable<string> FindAtLeast1WordsDocument(List<string> words)
+    private IEnumerable<string> FindAtLeastOneOfTheseWordsDocuments(List<string> words)
     {
         if(words.Count == 0)
             return _invertedIndex.Values.SelectMany(v => v);
         var allDocuments = _allDocumentsName.AsEnumerable();
-        return allDocuments.Except(FindNoWordsDocuments(words));
+        return allDocuments.Except(FindExcludedWordsDocuments(words));
     }
     public IEnumerable<string> FindDocumentsByCriteria(List<string> mustWords, List<string> atLeast1Word, List<string> noWords)
     {
-        return FindMustWordsDocuments(mustWords)
-            .Intersect(FindAtLeast1WordsDocument(atLeast1Word))
-            .Intersect(FindNoWordsDocuments(noWords));
+        return FindRequiredWordsDocuments(mustWords)
+            .Intersect(FindAtLeastOneOfTheseWordsDocuments(atLeast1Word))
+            .Intersect(FindExcludedWordsDocuments(noWords));
     }
 }
