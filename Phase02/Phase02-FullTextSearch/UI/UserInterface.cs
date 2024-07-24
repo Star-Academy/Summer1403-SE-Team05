@@ -9,25 +9,22 @@ internal class UserInterface
     {
         _invertedIndex = invertedIndex;
     }
-    private (List<string>, List<string>, List<string>) ParseCommand(string command)
+    private UserCriteria ParseCommand(string command)
     {
-        List<string> andWords = new List<string>();
-        List<string> orWords = new List<string>();
-        List<string> notWords = new List<string>();
-
+        UserCriteria userCriteria = new();
         var words = command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-
+        
         foreach (var word in words)
         {
             if (word.StartsWith('+'))
-                orWords.Add(word.Substring(1));
+                userCriteria.AtLeastOneOfTheseWords.Add(word.Substring(1));
             else if (word.StartsWith('-'))
-                notWords.Add(word.Substring(1));
+                userCriteria.ExcludedWords.Add(word.Substring(1));
             else
-                andWords.Add(word);
+                userCriteria.ExcludedWords.Add(word);
         }
 
-        return (andWords, orWords, notWords);
+        return userCriteria;
     }
     private bool AskCriteriaFromUser()
     {
@@ -36,8 +33,12 @@ internal class UserInterface
         if (command.Equals("exit!"))
             return false;
 
-        (List<string> andWords, List<string> orWords, List<string> notWords) = ParseCommand(command);
-        var resultFileNames = _invertedIndex.FindDocumentsByCriteria(andWords, orWords, notWords).ToList();
+        var userCriteria = ParseCommand(command);
+        var resultFileNames = _invertedIndex.FindDocumentsByCriteria(
+            userCriteria.RequiredWords,
+            userCriteria.AtLeastOneOfTheseWords,
+            userCriteria.ExcludedWords).
+            ToList();
 
         Console.WriteLine("\nSearch Results:");
         Console.WriteLine("---------------");
