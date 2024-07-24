@@ -19,9 +19,9 @@ internal class InvertedIndex
     }
     private void AddDocumentToInvertedIndex(string completeDocumentPath, string documentContent)
     {
-        string fileName = Path.GetFileName(completeDocumentPath);
-        string[] documentTokens = TokenizeDocument(documentContent);
-        foreach (string token in documentTokens)
+        var fileName = Path.GetFileName(completeDocumentPath);
+        var documentTokens = TokenizeDocument(documentContent);
+        foreach (var token in documentTokens)
         {
             if (!_invertedIndex.ContainsKey(token))
                 _invertedIndex[token] = new HashSet<string>();
