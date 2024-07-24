@@ -19,8 +19,8 @@ internal class InvertedIndex
     }
     private void AddDocumentToInvertedIndex(string completeDocumentPath, string documentContent)
     {
-        string fileName = Path.GetFileName(completeDocumentPath);
-        string[] documentTokens = TokenizeDocument(documentContent);
+        var fileName = Path.GetFileName(completeDocumentPath);
+        var documentTokens = TokenizeDocument(documentContent);
         documentTokens.ToList().ForEach(token =>
         {
             if (!_invertedIndex.ContainsKey(token))
