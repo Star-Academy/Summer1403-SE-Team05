@@ -10,41 +10,14 @@ internal class UserInterface
         _invertedIndex = invertedIndex;
     }
 
-    private void AskForTargetWordAndShowResult()
+    private bool AskForTargetWordAndShowResult()
     {
-<<<<<<< HEAD
-        Console.WriteLine("Enter the word you want to search for:");
+        Console.WriteLine("Enter the word you want to search for: (or exit! for exit)");
         var targetWord = Console.ReadLine();
-        var resultFileNames = _invertedIndex.FindDocumentsContainingTagetWord(targetWord);
-=======
-        List<string> andWords = new List<string>();
-        List<string> orWords = new List<string>();
-        List<string> notWords = new List<string>();
-
-        var words = command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-
-        foreach (var word in words)
-        {
-            if (word.StartsWith('+'))
-                orWords.Add(word.Substring(1));
-            else if (word.StartsWith('-'))
-                notWords.Add(word.Substring(1));
-            else
-                andWords.Add(word);
-        }
-
-        return (andWords, orWords, notWords);
-    }
-    private bool AskCriteriaFromUser()
-    {
-        Console.WriteLine("Enter criteria: (No prefix for AND words, + prefix for OR words, - prefix for NOT words, exit! for exit");
-        var command = Console.ReadLine();
-        if (command.Equals("exit!"))
+        if (targetWord.Equals("exit!"))
             return false;
 
-        (List<string> andWords, List<string> orWords, List<string> notWords) = ParseCommand(command);
-        var resultFileNames = _invertedIndex.FindDocumentsByCriteria(andWords, orWords, notWords).ToList();
->>>>>>> 0266b29 (refactor: some cleaning)
+        var resultFileNames = _invertedIndex.FindDocumentsContainingTargetWord(targetWord).ToList();
         Console.WriteLine("\nSearch Results:");
         Console.WriteLine("---------------");
 
@@ -62,11 +35,6 @@ internal class UserInterface
 
     public void RunAskCriteriaFromUserLoop()
     {
-<<<<<<< HEAD
-        while (true)
-            AskForTargetWordAndShowResult();
-=======
-        while (AskCriteriaFromUser()) ;
->>>>>>> 0266b29 (refactor: some cleaning)
+        while (AskForTargetWordAndShowResult()) ;
     }
 }
