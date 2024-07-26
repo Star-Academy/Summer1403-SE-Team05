@@ -7,7 +7,7 @@ internal class InvertedIndexFiller
 {
     private readonly IFileReader _fileReader;
     private readonly IInvertedIndexService _invertedIndexService;
-    public InvertedIndexFiller(FileReader fileReader, InvertedIndexService invertedIndexService)
+    public InvertedIndexFiller(IFileReader fileReader, IInvertedIndexService invertedIndexService)
     {
         _fileReader = fileReader;
         _invertedIndexService = invertedIndexService;

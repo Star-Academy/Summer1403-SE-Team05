@@ -9,7 +9,7 @@ internal class Program
     private static void Main()
     {
         var completeFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Resources.DocumentsPath);
-        FileReader fileReader = new();
+        RawFileReader fileReader = new();
         InvertedIndexService invertedIndexService = new();
         InvertedIndexFiller invertedIndexFiller = new(fileReader, invertedIndexService);
         invertedIndexFiller.FillInvertedIndex(completeFilePath);
