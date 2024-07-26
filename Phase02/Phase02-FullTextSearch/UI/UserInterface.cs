@@ -21,7 +21,7 @@ internal class UserInterface
             else if (word.StartsWith('-'))
                 userCriteria.ExcludedWords.Add(word.Substring(1));
             else
-                userCriteria.ExcludedWords.Add(word);
+                userCriteria.RequiredWords.Add(word);
         }
 
         return userCriteria;
