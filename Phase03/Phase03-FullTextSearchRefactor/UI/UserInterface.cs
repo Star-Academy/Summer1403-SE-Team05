@@ -1,11 +1,11 @@
-﻿using Phase03_FullTextSearchRefactor.Services;
+﻿using Phase03_FullTextSearchRefactor.Interfaces;
 
 namespace Phase03_FullTextSearchRefactor.UI;
 
 internal class UserInterface
 {
-    private readonly InvertedIndex _invertedIndex;
-    public UserInterface(InvertedIndex invertedIndex)
+    private readonly IInvertedIndexService _invertedIndex;
+    public UserInterface(IInvertedIndexService invertedIndex)
     {
         _invertedIndex = invertedIndex;
     }
@@ -27,7 +27,7 @@ internal class UserInterface
         return userCriteria;
     }
     private bool AskCriteriaFromUser()
-    {
+    { 
         Console.WriteLine("Enter criteria: (No prefix for AND words, + prefix for OR words, - prefix for NOT words, exit! for exit");
         var command = Console.ReadLine();
         if (command.Equals("exit!"))

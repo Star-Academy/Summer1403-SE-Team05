@@ -1,6 +1,8 @@
-﻿namespace Phase03_FullTextSearchRefactor.Services;
+﻿using Phase03_FullTextSearchRefactor.Interfaces;
 
-internal class FileReader
+namespace Phase03_FullTextSearchRefactor.Services;
+
+internal class RawFileReader : IFileReader
 {
     public Dictionary<string, string> ReadAllFiles(string filesPath)
     {

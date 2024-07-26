@@ -1,46 +1,22 @@
+using Phase03_FullTextSearchRefactor.Interfaces;
 using Phase03_FullTextSearchRefactor.Utilities;
 
-namespace Phase03_FullTextSearchRefactor.Services;
+namespace Phase03_FullTextSearchRefactor.Services.InvertedIndex;
 
-internal class InvertedIndex
+internal class InvertedIndexService : IInvertedIndexService
 {
-    private readonly FileReader _fileReader;
     private Dictionary<string, HashSet<string>> _invertedIndex = new();
     private HashSet<string> _allDocumentsName = new HashSet<string>();
-    public InvertedIndex(FileReader fileReader)
-    {
-        _fileReader = fileReader;
-    }
-    private string[] TokenizeDocument(string document)
-    {
-        return document.Split(
-            Delimiters.Characters,
-            StringSplitOptions.RemoveEmptyEntries
-            );
-    }
-    private void AddDocumentToInvertedIndex(string completeDocumentPath, string documentContent)
-    {
-        var fileName = Path.GetFileName(completeDocumentPath);
-        var documentTokens = TokenizeDocument(documentContent);
 
-        documentTokens.ToList().ForEach(token =>
-        {
-            if (!_invertedIndex.ContainsKey(token))
-                _invertedIndex[token] = new HashSet<string>();
-
-            _invertedIndex[token].Add(fileName);
-            _allDocumentsName.Add(fileName);
-        });
-    }
-    public void FillInvertedIndex(string documentFilesPath)
+    public void AddWord(string word, string fileName)
     {
-        var documents = _fileReader.ReadAllFiles(documentFilesPath);
-        var capitalizedDocuments = _fileReader.CapitalizeDocumentsContent(documents);
-        foreach (var document in capitalizedDocuments)
-        {
-            AddDocumentToInvertedIndex(document.Key, document.Value);
-        }
+        if (!_invertedIndex.ContainsKey(word))
+            _invertedIndex[word] = new HashSet<string>();
+
+        _invertedIndex[word].Add(fileName);
+        _allDocumentsName.Add(fileName);
     }
+
     private IEnumerable<string> FindDocumentsContainingTargetWord(string targetWord)
     {
         var upperTargetWord = targetWord.ToUpper();
@@ -71,7 +47,7 @@ internal class InvertedIndex
     }
     private IEnumerable<string> FindAtLeastOneOfTheseWordsDocuments(List<string> words)
     {
-        if(words.Count == 0)
+        if (words.Count == 0)
             return _invertedIndex.Values.SelectMany(v => v);
         var allDocuments = _allDocumentsName.AsEnumerable();
         return allDocuments.Except(FindExcludedWordsDocuments(words));
