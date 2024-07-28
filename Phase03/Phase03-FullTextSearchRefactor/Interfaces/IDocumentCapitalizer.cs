@@ -1,6 +1,8 @@
-﻿namespace Phase03_FullTextSearchRefactor.Interfaces;
+﻿using Phase03_FullTextSearchRefactor.Domain;
+
+namespace Phase03_FullTextSearchRefactor.Interfaces;
 
 internal interface IDocumentCapitalizer
 {
-    public Dictionary<string, string> CapitalizeDocumentsContent(Dictionary<string, string> documentsToCapitalize);
+    public FileContents CapitalizeDocumentsContent(FileContents fileContents);
 }

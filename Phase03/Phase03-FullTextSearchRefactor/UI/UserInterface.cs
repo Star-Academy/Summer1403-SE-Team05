@@ -23,7 +23,7 @@ internal class UserInterface
 
         return builder.Build();
     }
-    private void printResult(List<string> resultFileNames)
+    private void PrintResult(List<string> resultFileNames)
     {
         Console.WriteLine(Resources.ShowResultMessage);
         Console.WriteLine(Resources.MessageSeperator);
@@ -46,13 +46,9 @@ internal class UserInterface
             return false;
 
         var userCriteria = ParseCommand(command);
-        var resultFileNames = _invertedIndex.FindDocumentsByCriteria(
-            userCriteria.RequiredWords,
-            userCriteria.AtLeastOneOfTheseWords,
-            userCriteria.ExcludedWords).
-            ToList();
+        var resultFileNames = _invertedIndex.FindDocumentsByCriteria(userCriteria).ToList();
 
-        printResult(resultFileNames);
+        PrintResult(resultFileNames);
         return true;
     }
 

@@ -24,7 +24,7 @@ internal class Program
                 new RequiredWordParserStrategy()
             };
             var invertedIndexDataLoader = new InvertedIndexDataLoader(fileReader, invertedIndex, documentCapitalizer);
-            invertedIndexDataLoader.FillInvertedIndex(completeFilePath);
+            invertedIndexDataLoader.FillInvertedIndexFromGivenPath(completeFilePath);
             UserInterface userInterface = new(invertedIndexService, strategies);
             userInterface.RunAskCriteriaFromUserLoop();
         }

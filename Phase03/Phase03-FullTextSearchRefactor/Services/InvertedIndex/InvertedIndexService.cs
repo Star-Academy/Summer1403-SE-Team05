@@ -1,4 +1,5 @@
 using Phase03_FullTextSearchRefactor.Interfaces;
+using Phase03_FullTextSearchRefactor.UI;
 
 namespace Phase03_FullTextSearchRefactor.Services.InvertedIndex;
 
@@ -45,10 +46,10 @@ internal class InvertedIndexService : IInvertedIndexService
         var allDocuments = _invertedIndex.AllDocumentsName.AsEnumerable();
         return allDocuments.Except(FindExcludedWordsDocuments(words));
     }
-    public IEnumerable<string> FindDocumentsByCriteria(IEnumerable<string> mustWords, IEnumerable<string> atLeast1Word, IEnumerable<string> noWords)
+    public IEnumerable<string> FindDocumentsByCriteria(UserCriteria userCriteria)
     {
-        return FindRequiredWordsDocuments(mustWords)
-            .Intersect(FindAtLeastOneOfTheseWordsDocuments(atLeast1Word))
-            .Intersect(FindExcludedWordsDocuments(noWords));
+        return FindRequiredWordsDocuments(userCriteria.RequiredWords)
+            .Intersect(FindAtLeastOneOfTheseWordsDocuments(userCriteria.AtLeastOneOfTheseWords))
+            .Intersect(FindExcludedWordsDocuments(userCriteria.ExcludedWords));
     }
 }

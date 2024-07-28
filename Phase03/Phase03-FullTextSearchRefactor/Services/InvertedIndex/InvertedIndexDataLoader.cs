@@ -1,4 +1,5 @@
-﻿using Phase03_FullTextSearchRefactor.Interfaces;
+﻿using Phase03_FullTextSearchRefactor.Domain;
+using Phase03_FullTextSearchRefactor.Interfaces;
 using Phase03_FullTextSearchRefactor.Utilities;
 
 namespace Phase03_FullTextSearchRefactor.Services.InvertedIndex;
@@ -35,11 +36,11 @@ internal class InvertedIndexDataLoader
             _invertedIndex.AddWord(token, fileName);
         });
     }
-    public void FillInvertedIndex(string documentFilesPath)
+    public void FillInvertedIndexFromGivenPath(string documentFilesPath)
     {
-        var documents = _fileReader.ReadAllFiles(documentFilesPath);
-        var capitalizedDocuments = _documentCapitalizer.CapitalizeDocumentsContent(documents);
-        foreach (var document in capitalizedDocuments)
+        FileContents fileContents = _fileReader.ReadAllFiles(documentFilesPath);
+        FileContents capitalizedDocuments = _documentCapitalizer.CapitalizeDocumentsContent(fileContents);
+        foreach (var document in capitalizedDocuments.Contents)
         {
             AddDocumentToInvertedIndex(document.Key, document.Value);
         }
