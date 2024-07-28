@@ -1,58 +1,51 @@
 using Phase03_FullTextSearchRefactor.Interfaces;
-using Phase03_FullTextSearchRefactor.Utilities;
 
 namespace Phase03_FullTextSearchRefactor.Services.InvertedIndex;
 
 internal class InvertedIndexService : IInvertedIndexService
 {
-    private Dictionary<string, HashSet<string>> _invertedIndex = new();
-    private HashSet<string> _allDocumentsName = new HashSet<string>();
-
-    public void AddWord(string word, string fileName)
+    private InvertedIndex _invertedIndex;
+    public InvertedIndexService(InvertedIndex invertedIndex)
     {
-        if (!_invertedIndex.ContainsKey(word))
-            _invertedIndex[word] = new HashSet<string>();
-
-        _invertedIndex[word].Add(fileName);
-        _allDocumentsName.Add(fileName);
+        ArgumentNullException.ThrowIfNull(invertedIndex, nameof(invertedIndex));
+        _invertedIndex = invertedIndex;
     }
-
     private IEnumerable<string> FindDocumentsContainingTargetWord(string targetWord)
     {
         var upperTargetWord = targetWord.ToUpper();
-        if (_invertedIndex.TryGetValue(upperTargetWord, out var resultDocumentNames))
+        if (_invertedIndex.InvertedIndexMap.TryGetValue(upperTargetWord, out var resultDocumentNames))
             return resultDocumentNames;
         else
             return Enumerable.Empty<string>();
     }
-    private IEnumerable<string> FindRequiredWordsDocuments(List<string> words)
+    private IEnumerable<string> FindRequiredWordsDocuments(IEnumerable<string> words)
     {
-        if (words.Count == 0)
-            return _invertedIndex.Values.SelectMany(v => v);
-        var allDocuments = _allDocumentsName.AsEnumerable();
+        if (!words.Any())
+            return _invertedIndex.InvertedIndexMap.Values.SelectMany(v => v);
+        var allDocuments = _invertedIndex.AllDocumentsName.AsEnumerable();
         return words.Aggregate(
             allDocuments,
             (current, word) => current.Intersect(FindDocumentsContainingTargetWord(word))
             );
     }
-    private IEnumerable<string> FindExcludedWordsDocuments(List<string> words)
+    private IEnumerable<string> FindExcludedWordsDocuments(IEnumerable<string> words)
     {
-        if (words.Count == 0)
-            return _invertedIndex.Values.SelectMany(v => v);
-        var allDocuments = _allDocumentsName.AsEnumerable();
+        if (!words.Any())
+            return _invertedIndex.InvertedIndexMap.Values.SelectMany(v => v);
+        var allDocuments = _invertedIndex.AllDocumentsName.AsEnumerable();
         return words.Aggregate(
             allDocuments,
             (current, word) => current.Intersect(allDocuments.Except(FindDocumentsContainingTargetWord(word)))
             );
     }
-    private IEnumerable<string> FindAtLeastOneOfTheseWordsDocuments(List<string> words)
+    private IEnumerable<string> FindAtLeastOneOfTheseWordsDocuments(IEnumerable<string> words)
     {
-        if (words.Count == 0)
-            return _invertedIndex.Values.SelectMany(v => v);
-        var allDocuments = _allDocumentsName.AsEnumerable();
+        if (!words.Any())
+            return _invertedIndex.InvertedIndexMap.Values.SelectMany(v => v);
+        var allDocuments = _invertedIndex.AllDocumentsName.AsEnumerable();
         return allDocuments.Except(FindExcludedWordsDocuments(words));
     }
-    public IEnumerable<string> FindDocumentsByCriteria(List<string> mustWords, List<string> atLeast1Word, List<string> noWords)
+    public IEnumerable<string> FindDocumentsByCriteria(IEnumerable<string> mustWords, IEnumerable<string> atLeast1Word, IEnumerable<string> noWords)
     {
         return FindRequiredWordsDocuments(mustWords)
             .Intersect(FindAtLeastOneOfTheseWordsDocuments(atLeast1Word))

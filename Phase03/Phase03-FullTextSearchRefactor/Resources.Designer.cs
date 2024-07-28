@@ -61,11 +61,92 @@ namespace Phase03_FullTextSearchRefactor {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Argument Null Error:.
+        /// </summary>
+        internal static string ArgumentNullError {
+            get {
+                return ResourceManager.GetString("ArgumentNullError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter criteria: (No prefix for AND words, + prefix for OR words, - prefix for NOT words, exit! for exit.
+        /// </summary>
+        internal static string AskUserCriteriaMessage {
+            get {
+                return ResourceManager.GetString("AskUserCriteriaMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assets/Documents.
         /// </summary>
         internal static string DocumentsPath {
             get {
                 return ResourceManager.GetString("DocumentsPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File not found Error: .
+        /// </summary>
+        internal static string FileNotFoundError {
+            get {
+                return ResourceManager.GetString("FileNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: .
+        /// </summary>
+        internal static string GeneralError {
+            get {
+                return ResourceManager.GetString("GeneralError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IO Error: .
+        /// </summary>
+        internal static string IOError {
+            get {
+                return ResourceManager.GetString("IOError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ---------------.
+        /// </summary>
+        internal static string MessageSeperator {
+            get {
+                return ResourceManager.GetString("MessageSeperator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No files found containing the criteria..
+        /// </summary>
+        internal static string NoFilesFoundMessage {
+            get {
+                return ResourceManager.GetString("NoFilesFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Results:.
+        /// </summary>
+        internal static string ShowResultMessage {
+            get {
+                return ResourceManager.GetString("ShowResultMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unauthorized Access Error: .
+        /// </summary>
+        internal static string UnauthorizedAccessError {
+            get {
+                return ResourceManager.GetString("UnauthorizedAccessError", resourceCulture);
             }
         }
     }

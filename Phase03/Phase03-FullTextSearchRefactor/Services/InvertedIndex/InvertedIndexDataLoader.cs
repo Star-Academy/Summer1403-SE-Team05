@@ -3,14 +3,20 @@ using Phase03_FullTextSearchRefactor.Utilities;
 
 namespace Phase03_FullTextSearchRefactor.Services.InvertedIndex;
 
-internal class InvertedIndexFiller
+internal class InvertedIndexDataLoader
 {
     private readonly IFileReader _fileReader;
-    private readonly IInvertedIndexService _invertedIndexService;
-    public InvertedIndexFiller(IFileReader fileReader, IInvertedIndexService invertedIndexService)
+    private readonly IInvertedIndex _invertedIndex;
+    private readonly IDocumentCapitalizer _documentCapitalizer;
+    public InvertedIndexDataLoader(IFileReader fileReader, IInvertedIndex invertedIndex, IDocumentCapitalizer documentCapitalizer)
     {
+        ArgumentNullException.ThrowIfNull(fileReader, nameof(fileReader));
+        ArgumentNullException.ThrowIfNull(invertedIndex, nameof(invertedIndex));
+        ArgumentNullException.ThrowIfNull(documentCapitalizer, nameof(documentCapitalizer));
+
         _fileReader = fileReader;
-        _invertedIndexService = invertedIndexService;
+        _invertedIndex = invertedIndex;
+        _documentCapitalizer = documentCapitalizer;
     }
     private string[] TokenizeDocument(string document)
     {
@@ -26,13 +32,13 @@ internal class InvertedIndexFiller
 
         documentTokens.ToList().ForEach(token =>
         {
-            _invertedIndexService.AddWord(token, fileName);
+            _invertedIndex.AddWord(token, fileName);
         });
     }
     public void FillInvertedIndex(string documentFilesPath)
     {
         var documents = _fileReader.ReadAllFiles(documentFilesPath);
-        var capitalizedDocuments = _fileReader.CapitalizeDocumentsContent(documents);
+        var capitalizedDocuments = _documentCapitalizer.CapitalizeDocumentsContent(documents);
         foreach (var document in capitalizedDocuments)
         {
             AddDocumentToInvertedIndex(document.Key, document.Value);

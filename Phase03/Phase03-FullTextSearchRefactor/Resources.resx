@@ -117,7 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ArgumentNullError" xml:space="preserve">
+    <value>Argument Null Error:</value>
+  </data>
+  <data name="AskUserCriteriaMessage" xml:space="preserve">
+    <value>Enter criteria: (No prefix for AND words, + prefix for OR words, - prefix for NOT words, exit! for exit</value>
+  </data>
   <data name="DocumentsPath" xml:space="preserve">
     <value>Assets/Documents</value>
+  </data>
+  <data name="FileNotFoundError" xml:space="preserve">
+    <value>File not found Error: </value>
+  </data>
+  <data name="GeneralError" xml:space="preserve">
+    <value>Error: </value>
+  </data>
+  <data name="IOError" xml:space="preserve">
+    <value>IO Error: </value>
+  </data>
+  <data name="MessageSeperator" xml:space="preserve">
+    <value>---------------</value>
+  </data>
+  <data name="NoFilesFoundMessage" xml:space="preserve">
+    <value>No files found containing the criteria.</value>
+  </data>
+  <data name="ShowResultMessage" xml:space="preserve">
+    <value>Search Results:</value>
+  </data>
+  <data name="UnauthorizedAccessError" xml:space="preserve">
+    <value>Unauthorized Access Error: </value>
   </data>
 </root>

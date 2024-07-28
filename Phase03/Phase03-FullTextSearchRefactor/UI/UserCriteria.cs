@@ -2,7 +2,14 @@
 
 internal class UserCriteria
 {
-    public List<string> RequiredWords { get; set; } = new();
-    public List<string> AtLeastOneOfTheseWords { get; set; } = new();
-    public List<string> ExcludedWords { get; set; } = new();
+    public IReadOnlyList<string> RequiredWords { get; }
+    public IReadOnlyList<string> AtLeastOneOfTheseWords { get; }
+    public IReadOnlyList<string> ExcludedWords { get; }
+
+    public UserCriteria(IEnumerable<string> requiredWords, IEnumerable<string> atLeastOneOfTheseWords, IEnumerable<string> excludedWords)
+    {
+        RequiredWords = new List<string>(requiredWords).AsReadOnly();
+        AtLeastOneOfTheseWords = new List<string>(atLeastOneOfTheseWords).AsReadOnly();
+        ExcludedWords = new List<string>(excludedWords).AsReadOnly();
+    }
 }

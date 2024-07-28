@@ -5,30 +5,42 @@ namespace Phase03_FullTextSearchRefactor.UI;
 internal class UserInterface
 {
     private readonly IInvertedIndexService _invertedIndex;
-    public UserInterface(IInvertedIndexService invertedIndex)
+    private readonly List<ICommandParserStrategy> _strategies;
+    public UserInterface(IInvertedIndexService invertedIndex, IEnumerable<ICommandParserStrategy> strategies)
     {
         _invertedIndex = invertedIndex;
+        _strategies = strategies.ToList();
     }
     private UserCriteria ParseCommand(string command)
     {
-        UserCriteria userCriteria = new();
         var words = command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        
+        UserCriteriaBuilder builder = new();
         foreach (var word in words)
         {
-            if (word.StartsWith('+'))
-                userCriteria.AtLeastOneOfTheseWords.Add(word.Substring(1));
-            else if (word.StartsWith('-'))
-                userCriteria.ExcludedWords.Add(word.Substring(1));
-            else
-                userCriteria.RequiredWords.Add(word);
+            var strategy = _strategies.Single(s => s.CanHandle(word));
+            strategy.AddToBuilder(word, builder);
         }
 
-        return userCriteria;
+        return builder.Build();
+    }
+    private void printResult(List<string> resultFileNames)
+    {
+        Console.WriteLine(Resources.ShowResultMessage);
+        Console.WriteLine(Resources.MessageSeperator);
+
+        if (resultFileNames.Any())
+        {
+            foreach (var fileName in resultFileNames)
+                Console.WriteLine($"- {fileName}");
+        }
+        else
+            Console.WriteLine(Resources.NoFilesFoundMessage);
+
+        Console.WriteLine(Resources.MessageSeperator);
     }
     private bool AskCriteriaFromUser()
     { 
-        Console.WriteLine("Enter criteria: (No prefix for AND words, + prefix for OR words, - prefix for NOT words, exit! for exit");
+        Console.WriteLine(Resources.AskUserCriteriaMessage);
         var command = Console.ReadLine();
         if (command.Equals("exit!"))
             return false;
@@ -40,18 +52,7 @@ internal class UserInterface
             userCriteria.ExcludedWords).
             ToList();
 
-        Console.WriteLine("\nSearch Results:");
-        Console.WriteLine("---------------");
-
-        if (resultFileNames.Any())
-        {
-            foreach (var fileName in resultFileNames)
-                Console.WriteLine($"- {fileName}");
-        }
-        else
-            Console.WriteLine("No files found containing the criteria.");
-
-        Console.WriteLine("---------------\n");
+        printResult(resultFileNames);
         return true;
     }
 

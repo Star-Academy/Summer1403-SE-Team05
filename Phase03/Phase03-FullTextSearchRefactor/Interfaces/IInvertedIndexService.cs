@@ -2,6 +2,5 @@
 
 internal interface IInvertedIndexService
 {
-    public IEnumerable<string> FindDocumentsByCriteria(List<string> mustWords, List<string> atLeast1Word, List<string> noWords);
-    public void AddWord(string word, string fileName);
+    public IEnumerable<string> FindDocumentsByCriteria(IEnumerable<string> mustWords, IEnumerable<string> atLeast1Word, IEnumerable<string> noWords);
 }
