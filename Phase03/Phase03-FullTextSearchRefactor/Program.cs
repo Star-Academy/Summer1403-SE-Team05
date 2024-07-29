@@ -32,21 +32,5 @@ internal class Program
         {
             Logger.LogError(Resources.ArgumentNullError + ex.Message);
         }
-        catch (FileNotFoundException ex)
-        {
-            Logger.LogError(Resources.FileNotFoundError + ex.Message);
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            Logger.LogError(Resources.UnauthorizedAccessError + ex.Message);
-        }
-        catch (IOException ex)
-        {
-            Logger.LogError(Resources.IOError + ex.Message);
-        }
-        catch (Exception ex)
-        {
-            Logger.LogError(Resources.GeneralError + ex.Message);
-        }
     }
 }
