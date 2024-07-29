@@ -4,5 +4,5 @@ namespace Phase03_FullTextSearchRefactor.Interfaces;
 
 internal interface IFileReader
 {
-    public FileContents ReadAllFiles(string filesPath);
+    FileContents ReadAllFiles(string filesPath);
 }

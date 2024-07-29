@@ -2,5 +2,8 @@
 
 internal interface IInvertedIndex
 {
-    public void AddWord(string word, string fileName);
+    /// <summary>
+    /// Add file name to the list of word which shows the files containing that word
+    /// </summary>
+    void AddWordOccurrence(string word, string fileName);
 }

@@ -4,6 +4,8 @@ namespace Phase03_FullTextSearchRefactor.UI;
 
 internal class UserInterface
 {
+    private const string ExitCommand = "exit!";
+
     private readonly IInvertedIndexService _invertedIndex;
     private readonly List<ICommandParserStrategy> _strategies;
     public UserInterface(IInvertedIndexService invertedIndex, IEnumerable<ICommandParserStrategy> strategies)
@@ -25,24 +27,24 @@ internal class UserInterface
     }
     private void PrintResult(List<string> resultFileNames)
     {
-        Console.WriteLine(Resources.ShowResultMessage);
-        Console.WriteLine(Resources.MessageSeperator);
+        Logger.LogInfo(Resources.ShowResultMessage);
+        Logger.LogInfo(Resources.MessageSeperator);
 
         if (resultFileNames.Any())
         {
             foreach (var fileName in resultFileNames)
-                Console.WriteLine($"- {fileName}");
+                Logger.LogInfo($"- {fileName}");
         }
         else
-            Console.WriteLine(Resources.NoFilesFoundMessage);
+            Logger.LogInfo(Resources.NoFilesFoundMessage);
 
-        Console.WriteLine(Resources.MessageSeperator);
+        Logger.LogInfo(Resources.MessageSeperator);
     }
     private bool AskCriteriaFromUser()
     { 
         Console.WriteLine(Resources.AskUserCriteriaMessage);
         var command = Console.ReadLine();
-        if (command.Equals("exit!"))
+        if (command.Equals(ExitCommand))
             return false;
 
         var userCriteria = ParseCommand(command);

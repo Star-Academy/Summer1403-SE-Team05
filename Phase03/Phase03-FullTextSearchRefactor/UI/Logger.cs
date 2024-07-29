@@ -6,4 +6,8 @@ internal static class Logger
     {
         Console.WriteLine(message);
     }
+    public static void LogInfo(string message)
+    {
+        Console.WriteLine(message);
+    }
 }

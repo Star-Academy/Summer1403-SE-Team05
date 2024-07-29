@@ -4,5 +4,5 @@ namespace Phase03_FullTextSearchRefactor.Interfaces;
 
 internal interface IInvertedIndexService
 {
-    public IEnumerable<string> FindDocumentsByCriteria(UserCriteria userCriteria);
+    IEnumerable<string> FindDocumentsByCriteria(UserCriteria userCriteria);
 }

@@ -11,13 +11,9 @@ internal class InvertedIndexDataLoader
     private readonly IDocumentCapitalizer _documentCapitalizer;
     public InvertedIndexDataLoader(IFileReader fileReader, IInvertedIndex invertedIndex, IDocumentCapitalizer documentCapitalizer)
     {
-        ArgumentNullException.ThrowIfNull(fileReader, nameof(fileReader));
-        ArgumentNullException.ThrowIfNull(invertedIndex, nameof(invertedIndex));
-        ArgumentNullException.ThrowIfNull(documentCapitalizer, nameof(documentCapitalizer));
-
-        _fileReader = fileReader;
-        _invertedIndex = invertedIndex;
-        _documentCapitalizer = documentCapitalizer;
+        _fileReader = fileReader ?? throw new ArgumentNullException(nameof(fileReader));
+        _invertedIndex = invertedIndex ?? throw new ArgumentNullException(nameof(invertedIndex));
+        _documentCapitalizer = documentCapitalizer ?? throw new ArgumentNullException(nameof(documentCapitalizer));
     }
     private string[] TokenizeDocument(string document)
     {
@@ -33,7 +29,7 @@ internal class InvertedIndexDataLoader
 
         documentTokens.ToList().ForEach(token =>
         {
-            _invertedIndex.AddWord(token, fileName);
+            _invertedIndex.AddWordOccurrence(token, fileName);
         });
     }
     public void FillInvertedIndexFromGivenPath(string documentFilesPath)
