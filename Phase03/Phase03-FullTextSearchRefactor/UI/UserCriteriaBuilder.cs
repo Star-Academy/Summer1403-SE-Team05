@@ -1,10 +1,12 @@
-﻿namespace Phase03_FullTextSearchRefactor.UI;
+﻿using System.Collections.Generic;
+
+namespace Phase03_FullTextSearchRefactor.UI;
 
 internal class UserCriteriaBuilder
 {
-    private List<string> _requiredWords = new();
-    private List<string> _atLeastOneOfTheseWords = new();
-    private List<string> _excludedWords = new();
+    private readonly List<string> _requiredWords = new();
+    private readonly List<string> _atLeastOneOfTheseWords = new();
+    private readonly List<string> _excludedWords = new();
     public void AddRequiredWord(string word)
     {
         _requiredWords.Add(word);
@@ -21,6 +23,9 @@ internal class UserCriteriaBuilder
     }
     public UserCriteria Build()
     {
-        return new UserCriteria(_requiredWords.AsReadOnly(), _atLeastOneOfTheseWords.AsReadOnly(), _excludedWords.AsReadOnly());
+        return new UserCriteria(
+            _requiredWords.AsReadOnly(),
+            _atLeastOneOfTheseWords.AsReadOnly(),
+            _excludedWords.AsReadOnly());
     }
 }

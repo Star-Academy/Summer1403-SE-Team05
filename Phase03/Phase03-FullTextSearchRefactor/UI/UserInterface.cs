@@ -10,8 +10,8 @@ internal class UserInterface
     private readonly List<ICommandParserStrategy> _strategies;
     public UserInterface(IInvertedIndexService invertedIndex, IEnumerable<ICommandParserStrategy> strategies)
     {
-        _invertedIndex = invertedIndex;
-        _strategies = strategies.ToList();
+        _invertedIndex = invertedIndex ?? throw new ArgumentNullException(nameof(invertedIndex));
+        _strategies = strategies.ToList() ?? throw new ArgumentNullException(nameof(strategies));
     }
     private UserCriteria ParseCommand(string command)
     {

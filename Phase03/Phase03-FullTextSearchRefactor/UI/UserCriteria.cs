@@ -6,7 +6,11 @@ internal class UserCriteria
     public IReadOnlyList<string> AtLeastOneOfTheseWords { get; }
     public IReadOnlyList<string> ExcludedWords { get; }
 
-    public UserCriteria(IEnumerable<string> requiredWords, IEnumerable<string> atLeastOneOfTheseWords, IEnumerable<string> excludedWords)
+    public UserCriteria(
+        IEnumerable<string> requiredWords,
+        IEnumerable<string> atLeastOneOfTheseWords,
+        IEnumerable<string> excludedWords
+        )
     {
         RequiredWords = new List<string>(requiredWords).AsReadOnly();
         AtLeastOneOfTheseWords = new List<string>(atLeastOneOfTheseWords).AsReadOnly();

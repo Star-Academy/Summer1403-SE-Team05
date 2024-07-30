@@ -2,5 +2,5 @@
 
 public class FileContents
 {
-    public Dictionary<string, string> Contents { get; set; } = new Dictionary<string, string>();
+    public Dictionary<string, string> Contents { get; set; } = new();
 }

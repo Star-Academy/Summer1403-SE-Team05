@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ArgumentNullError" xml:space="preserve">
-    <value>Argument Null Error:</value>
+    <value>None of the services passed to others can be null.</value>
   </data>
   <data name="AskUserCriteriaMessage" xml:space="preserve">
     <value>Enter criteria: (No prefix for AND words, + prefix for OR words, - prefix for NOT words, exit! for exit</value>

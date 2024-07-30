@@ -7,11 +7,12 @@ internal class DocumentCapitalizer : IDocumentCapitalizer
 {
     public FileContents CapitalizeDocumentsContent(FileContents filesToCapitalize)
     {
-        FileContents resultFileContents = new();
-        resultFileContents.Contents = filesToCapitalize.Contents.ToDictionary(
-            file => file.Key,
-            file => file.Value.ToUpper()
-        );
-        return resultFileContents;
+        return new FileContents
+        {
+            Contents = filesToCapitalize.Contents.ToDictionary(
+                file => file.Key,
+                file => file.Value.ToUpper()
+            )
+        };
     }
 }

@@ -19,7 +19,7 @@ internal class InvertedIndexService : IInvertedIndexService
         else
             return Enumerable.Empty<string>();
     }
-    private IEnumerable<string> FindRequiredWordsDocuments(IEnumerable<string> words)
+    private IEnumerable<string> FindRequiredWordsDocuments(IReadOnlyCollection<string> words)
     {
         if (!words.Any())
             return _invertedIndex.InvertedIndexMap.Values.SelectMany(v => v);
@@ -29,7 +29,7 @@ internal class InvertedIndexService : IInvertedIndexService
             (current, word) => current.Intersect(FindDocumentsContainingTargetWord(word))
             );
     }
-    private IEnumerable<string> FindExcludedWordsDocuments(IEnumerable<string> words)
+    private IEnumerable<string> FindExcludedWordsDocuments(IReadOnlyCollection<string> words)
     {
         if (!words.Any())
             return _invertedIndex.InvertedIndexMap.Values.SelectMany(v => v);
@@ -39,7 +39,7 @@ internal class InvertedIndexService : IInvertedIndexService
             (current, word) => current.Intersect(allDocuments.Except(FindDocumentsContainingTargetWord(word)))
             );
     }
-    private IEnumerable<string> FindAtLeastOneOfTheseWordsDocuments(IEnumerable<string> words)
+    private IEnumerable<string> FindAtLeastOneOfTheseWordsDocuments(IReadOnlyCollection<string> words)
     {
         if (!words.Any())
             return _invertedIndex.InvertedIndexMap.Values.SelectMany(v => v);

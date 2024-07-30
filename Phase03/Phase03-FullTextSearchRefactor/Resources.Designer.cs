@@ -61,7 +61,7 @@ namespace Phase03_FullTextSearchRefactor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Argument Null Error:.
+        ///   Looks up a localized string similar to None of the services passed to others can be null..
         /// </summary>
         internal static string ArgumentNullError {
             get {

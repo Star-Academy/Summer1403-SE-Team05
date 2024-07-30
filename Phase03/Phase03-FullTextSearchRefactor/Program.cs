@@ -1,4 +1,5 @@
-﻿using Phase03_FullTextSearchRefactor.Interfaces;
+﻿using Microsoft.Extensions.Logging;
+using Phase03_FullTextSearchRefactor.Interfaces;
 using Phase03_FullTextSearchRefactor.Services;
 using Phase03_FullTextSearchRefactor.Services.InvertedIndex;
 using Phase03_FullTextSearchRefactor.UI;
@@ -10,6 +11,7 @@ internal class Program
 {
     private static void Main()
     {
+        ILogger logger = LoggerFactory.Create(builder => builder.AddConsole()).CreateLogger<Program>();
         try
         {
             var completeFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Resources.DocumentsPath);
