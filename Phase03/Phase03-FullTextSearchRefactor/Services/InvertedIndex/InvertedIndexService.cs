@@ -8,8 +8,7 @@ internal class InvertedIndexService : IInvertedIndexService
     private InvertedIndex _invertedIndex;
     public InvertedIndexService(InvertedIndex invertedIndex)
     {
-        ArgumentNullException.ThrowIfNull(invertedIndex, nameof(invertedIndex));
-        _invertedIndex = invertedIndex;
+        _invertedIndex = invertedIndex ?? throw new ArgumentNullException(nameof(invertedIndex));
     }
     private IEnumerable<string> FindDocumentsContainingTargetWord(string targetWord)
     {

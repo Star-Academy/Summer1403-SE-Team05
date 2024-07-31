@@ -27,18 +27,18 @@ internal class UserInterface
     }
     private void PrintResult(List<string> resultFileNames)
     {
-        Logger.LogInfo(Resources.ShowResultMessage);
-        Logger.LogInfo(Resources.MessageSeperator);
+        Logger.LogMessage(Resources.ShowResultMessage);
+        Logger.LogMessage(Resources.MessageSeperator);
 
         if (resultFileNames.Any())
         {
             foreach (var fileName in resultFileNames)
-                Logger.LogInfo($"- {fileName}");
+                Logger.LogMessage($"- {fileName}");
         }
         else
-            Logger.LogInfo(Resources.NoFilesFoundMessage);
+            Logger.LogMessage(Resources.NoFilesFoundMessage);
 
-        Logger.LogInfo(Resources.MessageSeperator);
+        Logger.LogMessage(Resources.MessageSeperator);
     }
     private bool AskCriteriaFromUser()
     { 

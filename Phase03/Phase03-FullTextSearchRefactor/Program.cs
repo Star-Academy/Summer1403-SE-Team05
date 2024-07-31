@@ -14,19 +14,19 @@ internal class Program
         ILogger logger = LoggerFactory.Create(builder => builder.AddConsole()).CreateLogger<Program>();
         try
         {
-            var completeFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Resources.DocumentsPath);
             var fileReader = new RawFileReader();
             var invertedIndex = new InvertedIndex();
-            var invertedIndexService = new InvertedIndexService(invertedIndex);
             var documentCapitalizer = new DocumentCapitalizer();
+            var invertedIndexDataLoader = new InvertedIndexDataLoader(fileReader, invertedIndex, documentCapitalizer);
+            var completeFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Resources.DocumentsPath);
+            invertedIndexDataLoader.FillInvertedIndexFromGivenPath(completeFilePath);
             var strategies = new List<ICommandParserStrategy>
             {
                 new AtLeastOneWordParserStrategy(),
                 new ExcludedWordParserStrategy(),
                 new RequiredWordParserStrategy()
             };
-            var invertedIndexDataLoader = new InvertedIndexDataLoader(fileReader, invertedIndex, documentCapitalizer);
-            invertedIndexDataLoader.FillInvertedIndexFromGivenPath(completeFilePath);
+            var invertedIndexService = new InvertedIndexService(invertedIndex);
             UserInterface userInterface = new(invertedIndexService, strategies);
             userInterface.RunAskCriteriaFromUserLoop();
         }
