@@ -4,7 +4,7 @@ internal class ReservedCharacters
 {
     public static readonly char[] Characters =
         [
-            AtLeastOneWordParserStrategy.reservedCharacter,
-            ExcludedWordParserStrategy.reservedCharacter
+            AtLeastOneWordParserStrategy.ReservedCharacter,
+            ExcludedWordParserStrategy.ReservedCharacter
         ];
 }

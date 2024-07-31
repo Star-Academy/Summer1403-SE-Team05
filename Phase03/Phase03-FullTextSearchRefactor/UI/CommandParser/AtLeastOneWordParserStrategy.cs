@@ -4,8 +4,8 @@ namespace Phase03_FullTextSearchRefactor.UI.CommandParser;
 
 internal class AtLeastOneWordParserStrategy : ICommandParserStrategy
 {
-    public static readonly char reservedCharacter = '+';
-    public bool CanHandle(string word) => word.StartsWith(reservedCharacter);
+    public static readonly char ReservedCharacter = '+';
+    public bool CanHandle(string word) => word.StartsWith(ReservedCharacter);
 
     public void AddToBuilder(string word, UserCriteriaBuilder userCriteriaBuilder)
     {
